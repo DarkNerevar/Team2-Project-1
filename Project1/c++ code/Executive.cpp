@@ -38,6 +38,11 @@ void Executive::boardSetup()
   }
   //--------------------------------------------
   //Obtains number of ships to play with from user
+  
+  cout << "\n\n";
+  cout << "------------------------------------Battleship-----------------------------------" << '\n';
+  cout << "---------------------------------------------------------------------------------" << '\n';
+  
   do
   {
     cout << "Welcome! Please input amount of ships (1-5) to play with: ";

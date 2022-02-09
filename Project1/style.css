@@ -1,36 +1,33 @@
-
-body{
-    background: lightblue;
-    font-family: 'Roboto', sans-serif;
+.container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-    margin: 0;
-}
-
-.container{
-    display: flex;
-}
-
-.board1{
-   width: 400px;
-   height: 400px;
-   display: flex;
-   flex-wrap: wrap;
-   background-color: blue
-}
-
-.board2{
+  }
+  
+  .grid-user {
     width: 400px;
     height: 400px;
     display: flex;
     flex-wrap: wrap;
-    background-color: blue
-}
-
-.grid div{
-    width: 40px
-}
+    background-color: blue;
+    margin: 20px;
+  }
+  
+  .grid div {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .grid-computer {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightgreen;
+    margin: 20px;
+  }
+  
+  .grid-display {
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+    background-color: yellow;
+  }

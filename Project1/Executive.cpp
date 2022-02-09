@@ -1,6 +1,7 @@
 #include "Executive.h"
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "stdlib.h"
 using namespace std;
 
@@ -36,102 +37,210 @@ void Executive::boardSetup()
       m_player2OpponentKey[i][j] = '?';
     }
   }
-  //--------------------------------------------
-  //Obtains number of ships to play with from user
-  do
-  {
-    cout << "Welcome! Please input amount of ships (1-5) to play with: ";
-    cin >> m_shipAmount;
-    if (m_shipAmount < 1 || m_shipAmount > 5)
-    {
-      cout << "Incorrect amount of ships!" << '\n';
-    }
-
-  } while (m_shipAmount < 1 || m_shipAmount > 5);
+  
+	startMenu();		//prints the start menu
+  
   //--------------------------------------------
   //PLAYER 1 SETS THEIR BOARD BELOW
   //--------------------------------------------
   printPlayer1PersonalKey();
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
-    m_shipNumber = 0;
-    do
+		do
+		{
+			cout << "\n1) Vertical\n";
+			cout << "2) Horizontal\n";
+			cout << "Which orientation would you like for ship " << i+1 << ": ";
+			m_shipOrientation = validateInput();
+			if(m_shipOrientation < 1 || m_shipOrientation > 2)
+			{cout << "Invalid Input";}
+		}while(m_shipOrientation < 1 || m_shipOrientation > 2);
+   
+	do
     {
-      for (int j = 0; j <= i; j++) //# of sections in ship
-      {
-        m_shipNumber = j;
-
-        cout << "Player 1: Please enter column (A-J) for ship " << (i + 1) << " , section #" << (j + 1) << ": ";
+        cout << "Player 1: Please enter column (A-J) for ship " << (i + 1) << ": ";
         cin >> m_tempCol;
         m_shipCol = (int(m_tempCol) - 65);
 
-        cout << "Player 1: Please enter row for ship " << (i + 1) << " , section #" << (j + 1) << ": ";
-        cin >> m_shipRow;
-
-        if ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) || ( m_player1PersonalKey[m_shipRow][m_shipCol] == 0 ) )
-        {
-          cout << "Placement is not valid! Please enter a valid coordinate." << '\n';
-        }
+        cout << "Player 1: Please enter row for ship " << (i + 1) << ": ";
+        m_shipRow = validateInput()-1;
+		
+		counter = 0;
+		for(int j=0; j<=i; j++)
+		{
+			if(m_shipOrientation == 1)
+			{
+				if ( (m_shipCol < 0 || m_shipCol >= m_cols) || ( (m_shipRow + j) < 0 || (m_shipRow + j) >= m_rows) )
+				{
+					cout << "Out of Bounds.\n";
+					counter++;
+				}
+				else if(m_player1PersonalKey[m_shipRow + j][m_shipCol] == 'S' )
+				{
+					cout << "There's already a ship there.\n";
+					counter++;
+				}
+			}
+			if(m_shipOrientation == 2)
+			{
+				if ( ( (m_shipCol + j) < 0 || (m_shipCol + j) >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+				{
+					cout << "Out of Bounds.\n";
+					counter++;
+				}
+				else if( m_player1PersonalKey[m_shipRow][m_shipCol + j] == 'S' )
+				{
+					cout << "There's already a ship there.\n";
+					counter++;
+				}
+			}
+		}
+        if (counter != 0)
+        {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
         else
         {
-          m_player1PersonalKey[m_shipRow][m_shipCol] = 'S';
+			for(int j=0; j<=i; j++)
+			{
+				if(m_shipOrientation == 1)
+				{m_player1PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
+				if(m_shipOrientation == 2)
+				{m_player1PersonalKey[m_shipRow][m_shipCol + j] = 'S';}
+			}
         }
-      }
-    }while ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows));
+    }while (counter != 0);
   }
-
+  
   cout << string(50,'\n');
   //--------------------------------------------
   //PLAYER 2 SETS THEIR BOARD BELOW
   //--------------------------------------------
+  
   printPlayer2PersonalKey();
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
-    m_shipNumber = 0;
-    do
+		do
+		{
+			cout << "\n1) Vertical\n";
+			cout << "2) Horizontal\n";
+			cout << "Which orientation would you like for ship " << i+1 << ": ";
+			m_shipOrientation = validateInput();
+			if(m_shipOrientation < 1 || m_shipOrientation > 2)
+			{cout << "Invalid Input";}
+		}while(m_shipOrientation < 1 || m_shipOrientation > 2);
+   
+	do
     {
-      for (int j = 0; j <= i; j++) //# of sections in ship
-      {
-        m_shipNumber = j;
-
-        cout << "Player 2: Please enter column (A-J) for ship " << (i + 1) << " , section #" << (j + 1) << ": ";
+        cout << "Player 2: Please enter column (A-J) for ship " << (i + 1) << ": ";
         cin >> m_tempCol;
         m_shipCol = (int(m_tempCol) - 65);
 
-        cout << "Player 2: Please enter row for ship " << (i + 1) << " , section #" << (j + 1) << ": ";
-        cin >> m_shipRow;
-
-        if ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) || ( m_player2PersonalKey[m_shipRow][m_shipCol] == 0 ) )
-        {
-          cout << "Placement is not valid! Please enter a valid coordinate." << '\n';
-        }
+        cout << "Player 2: Please enter row for ship " << (i + 1) << ": ";
+        m_shipRow = validateInput()-1;
+		
+		counter = 0;
+		for(int j=0; j<=i; j++)
+		{
+			if(m_shipOrientation == 1)
+			{
+				if ( (m_shipCol < 0 || m_shipCol >= m_cols) || ( (m_shipRow + j) < 0 || (m_shipRow + j) >= m_rows) )
+				{
+					cout << "Out of Bounds.\n";
+					counter++;
+				}
+				else if(m_player2PersonalKey[m_shipRow + j][m_shipCol] == 'S' )
+				{
+					cout << "There's already a ship there.\n";
+					counter++;
+				}
+			}
+			if(m_shipOrientation == 2)
+			{
+				if ( ( (m_shipCol + j) < 0 || (m_shipCol + j) >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+				{
+					cout << "Out of Bounds.\n";
+					counter++;
+				}
+				else if( m_player2PersonalKey[m_shipRow][m_shipCol + j] == 'S' )
+				{
+					cout << "There's already a ship there.\n";
+					counter++;
+				}
+			}
+		}
+        if (counter != 0)
+        {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
         else
         {
-          m_player2PersonalKey[m_shipRow][m_shipCol] = 'S';
+			for(int j=0; j<=i; j++)
+			{
+				if(m_shipOrientation == 1)
+				{m_player2PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
+				if(m_shipOrientation == 2)
+				{m_player2PersonalKey[m_shipRow][m_shipCol + j] = 'S';}
+			}
         }
-      }
-    }while ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows));
+    }while (counter != 0);
   }
-
+  
   cout << string(50,'\n');
-  //----------------------------------------------------------------------
+}
+void Executive::startMenu()
+{
+	cout << "\n\n";
+	cout << "-----------------------------------Battleship------------------------------------" << '\n';
+	cout << "---------------------------------------------------------------------------------" << '\n';
+	cout << "\n\n";
+	cout << "Welcome to the Game!\n";
+	
+	printRules();
+  
+  //--------------------------------------------
+  //Obtains number of ships to play with from user
+  
+  do
+  {
+    cout << "Please input amount of ships (1-5) to play with: ";
+    m_shipAmount = validateInput();
+    if (m_shipAmount < 1 || m_shipAmount > 5)
+    {
+      cout << "Incorrect amount of ships!" << '\n';
+    }
 
+  } while (m_shipAmount < 1 || m_shipAmount > 5);
+  cout << '\n';
+}
+void Executive::printRules()
+{
+	cout << "\n--------Rules & Information---------\n";
+	cout << "The Objective of the game is to sink all of your opponents ships before they sink yours.\n";
+	cout << "During your turn, you will be asked to input coordinates to fire upon.\n";
+	cout << "To start the game you will be asked how many ships you want in play.\n";
+	cout << "Then each player will take turns placing their ships.\n";
+	cout << "Ships are placed either vertically or horizontally, you will be given the choice.\n";
+	cout << "Players will then input the coordinates for their ship placement.\n";
+	cout << "Coordinates for ship placement correspond to the front tip of each ship.\n";
+	cout << "The orientation of the ship determines where the back of the ship is located\n";
+	cout << "The ship will occupy the coordinates below or to the right of the tip of each ship.\n";
+	cout << "Once all ships are placed, each player will take turns attacking.\n";
+	cout << "The first player to destroy all of their opponent's ships wins.\n";
+	cout << "Have fun!\n\n";
 }
 void Executive::playGame()
 {
-  do
+  do				//game loop that runs as long as the game is not finished
   {
+    if (checkIfFinished() == false)			//player1's turn is first then player2
+    {player1Turn();}
     if (checkIfFinished() == false)
-    {
-      player1Turn();
-    }
-    if (checkIfFinished() == false)
-    {
-      player2Turn();
-    }
+    {player2Turn();}
   } while(checkIfFinished() == false);
-
-  cout << "Player " << m_winner << " has won!\n";
+  gameOver();
+}
+void Executive::gameOver()
+{
+	cout << "\n\nGAME OVER!\n\n";
+	cout << "Player " << m_winner << " has won!";
+	cout << "\n\nCONGRADULATIONS\n\n";
 }
 void Executive::printMenu()
 {
@@ -139,6 +248,7 @@ void Executive::printMenu()
   cout << "1) Attack enemy\n";
   cout << "2) View screens\n";
   cout << "3) See rules\n";
+  cout << "Choice: ";
 
 }
 void Executive::printPlayer1PersonalKey()
@@ -154,7 +264,7 @@ void Executive::printPlayer1PersonalKey()
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << i << '\t';
+    cout << (i+1) << '\t';
     for (int j = 0; j < m_cols; j++)
     {
       cout << m_player1PersonalKey[i][j] << '\t';
@@ -177,7 +287,7 @@ void Executive::printPlayer2PersonalKey()
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << i << '\t';
+    cout << (i+1) << '\t';
     for (int j = 0; j < m_cols; j++)
     {
       cout << m_player2PersonalKey[i][j] << '\t';
@@ -199,7 +309,7 @@ void Executive::printPlayer1OpponentKey()
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << i << '\t';
+    cout << (i+1) << '\t';
     for (int j = 0; j < m_cols; j++)
     {
       cout << m_player1OpponentKey[i][j] << '\t';
@@ -220,7 +330,7 @@ void Executive::printPlayer2OpponentKey()
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << i << '\t';
+    cout << (i+1) << '\t';
     for (int j = 0; j < m_cols; j++)
     {
       cout << m_player2OpponentKey[i][j] << '\t';
@@ -229,15 +339,13 @@ void Executive::printPlayer2OpponentKey()
   }
   cout << "---------------------------------------------------------------------------------" << '\n';
 }
-
-
 void Executive::player1Turn()
 {
   cout << "Player 1 turn.\n";
   do
   {
     printMenu();
-    cin >> m_playerChoice;
+    m_playerChoice = validateInput();
 
       if (m_playerChoice == 1)
       {
@@ -250,7 +358,7 @@ void Executive::player1Turn()
       }
       else if (m_playerChoice == 3)
       {
-        cout << "...\n";
+        printRules();
       }
       else
       {
@@ -265,7 +373,7 @@ void Executive::player2Turn()
   do
   {
     printMenu();
-    cin >> m_playerChoice;
+    m_playerChoice = validateInput();
 
       if (m_playerChoice == 1)
       {
@@ -278,7 +386,7 @@ void Executive::player2Turn()
       }
       else if (m_playerChoice == 3)
       {
-        cout << "...\n";
+        printRules();
       }
       else
       {
@@ -287,23 +395,34 @@ void Executive::player2Turn()
     } while (m_playerChoice != 1);
 
 }
-
 void Executive::player1Attack()
 {
   //1) attack player2
   do
   {
+	  counter = 0;
     cout << "Player 1: Please enter column (A-J) to attack player 2: ";
     cin >> m_tempCol;
     m_shipCol = (int(m_tempCol) - 65);
-    cout << "Please enter row (0-9) to attack player 2: ";
-    cin >> m_shipRow;
+    cout << "Please enter row (1-10) to attack player 2: ";
+    m_shipRow = validateInput()-1;
 
-    if ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) )
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
     {
       cout << "Invalid coordinate entry!" << '\n';
+	  counter++;
     }
-  }while ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) );
+	else if ( m_player2PersonalKey[m_shipRow][m_shipCol] == 'X' )
+	{
+		cout << "Coordinate Already Hit. Aim Elsewhere!\n";
+		counter++;
+	}
+	else if ( m_player1OpponentKey[m_shipRow][m_shipCol] == '~' )
+	{
+		cout << "Coordinate Already Shot. Aim Elsewhere!\n";
+		counter++;
+	}
+  }while (counter != 0);
 
   cout << string(50,'\n');
 
@@ -324,23 +443,34 @@ void Executive::player1Attack()
     m_player1OpponentKey[m_shipRow][m_shipCol] = '~';
   }
 }
-
 void Executive::player2Attack()
 {
   //1) attack player1
   do
   {
+	  counter = 0;
     cout << "Player 2: Please enter column (A-J) to attack player 1: ";
     cin >> m_tempCol;
     m_shipCol = (int(m_tempCol) - 65);
-    cout << "Please enter row (0-9) to attack player 1: ";
-    cin >> m_shipRow;
+    cout << "Please enter row (1-10) to attack player 1: ";
+    m_shipRow = validateInput()-1;
 
-    if ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) )
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
     {
       cout << "Invalid coordinate entry!" << '\n';
+	  counter++;
     }
-  }while ( (m_shipCol < 0 || m_shipCol > m_cols) || (m_shipRow < 0 || m_shipRow > m_rows) );
+	else if ( m_player1PersonalKey[m_shipRow][m_shipCol] == 'X' )
+	{
+		cout << "Coordinate Already Hit. Aim Elsewhere!\n";
+		counter++;
+	}
+	else if ( m_player2OpponentKey[m_shipRow][m_shipCol] == '~' )
+	{
+		cout << "Coordinate Already Shot. Aim Elsewhere!\n";
+		counter++;
+	}
+  }while (counter != 0);
 
   cout << string(50,'\n');
 
@@ -361,7 +491,6 @@ void Executive::player2Attack()
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
   }
 }
-
 bool Executive::checkIfFinished()
 {
   m_player1ShipsRemaining = 0;
@@ -396,18 +525,18 @@ bool Executive::checkIfFinished()
     return (false);
   }
 }
-
-
-
-/*
-NEEDS IMPLEMENTATION:
--isValidMove for players one and two
--check for determining if entire ship was sunk
--Add menu for setup, something like this:
-void Executive::setupMenu()
+int Executive::validateInput()
 {
-  cout << "1) Print personal board\n";
-  cout << "2) Place ship\n";
-  cout << "3) End setup\n";
+	int choice;
+    std::cin >> choice;
+    while ( std::cin.fail() )
+    {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Sorry, your input did not seem to be an int. Try again: ";   
+        std::cin >> choice;
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return(choice);
 }
-*/
+

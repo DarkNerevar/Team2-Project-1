@@ -17,9 +17,8 @@ class Executive
 
     int m_shipAmount = 0;
     int m_shipNumber = 0;
-
-    int m_player1ShipAmount = 0;
-    int m_player2ShipAmount = 0;
+	int m_shipOrientation = 1;
+	int counter = 0;
 
     char m_tempCol = ' ';
     int m_shipCol = 0;
@@ -39,7 +38,10 @@ class Executive
     Executive();
 
     void boardSetup();
+	void startMenu();
+	void printRules();
     void playGame();
+	void gameOver();
     void printMenu();
     void printPlayer1PersonalKey();
     void printPlayer2PersonalKey();
@@ -50,6 +52,7 @@ class Executive
     void player1Attack();
     void player2Attack();
     bool checkIfFinished();
+	int validateInput();
     ~Executive()
     {
       for (int i = 0; i < m_rows; i++)

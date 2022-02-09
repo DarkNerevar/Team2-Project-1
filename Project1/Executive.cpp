@@ -7,7 +7,7 @@ using namespace std;
 
 Executive::Executive()
 {
-  m_player1PersonalKey = new char*[m_rows];
+  m_player1PersonalKey = new char*[m_rows];			//Initializes the boards
   m_player2PersonalKey = new char*[m_rows];
   m_player1OpponentKey = new char*[m_rows];
   m_player2OpponentKey = new char*[m_rows];

@@ -12,8 +12,8 @@ Executive::Executive()
   m_player1OpponentKey = new char*[m_rows];
   m_player2OpponentKey = new char*[m_rows];
 
-  boardSetup();
-  playGame();
+  boardSetup();				//call to set up the boards
+  playGame();				//call to run the game
 }
 void Executive::boardSetup()
 {
@@ -43,10 +43,10 @@ void Executive::boardSetup()
   //--------------------------------------------
   //PLAYER 1 SETS THEIR BOARD BELOW
   //--------------------------------------------
-  printPlayer1PersonalKey();
+  printPlayer1PersonalKey();			//prints player1's board
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
-		do
+		do							//has the user input the orientation for ship placement
 		{
 			cout << "\n1) Vertical\n";
 			cout << "2) Horizontal\n";
@@ -58,36 +58,40 @@ void Executive::boardSetup()
    
 	do
     {
-        cout << "Player 1: Please enter column (A-J) for ship " << (i + 1) << ": ";
+        cout << "Player 1: Please enter column (A-J) for ship " << (i + 1) << ": ";			//user chooses column
         cin >> m_tempCol;
         m_shipCol = (int(m_tempCol) - 65);
 
-        cout << "Player 1: Please enter row for ship " << (i + 1) << ": ";
+        cout << "Player 1: Please enter row for ship " << (i + 1) << ": ";					//user chooses row
         m_shipRow = validateInput()-1;
 		
-		counter = 0;
+		counter = 0;								//counter is used to check if placement is valid
 		for(int j=0; j<=i; j++)
 		{
-			if(m_shipOrientation == 1)
+			if(m_shipOrientation == 1)			//vertical orientation
 			{
+				//checks if the ship is out of bounds
 				if ( (m_shipCol < 0 || m_shipCol >= m_cols) || ( (m_shipRow + j) < 0 || (m_shipRow + j) >= m_rows) )
 				{
 					cout << "Out of Bounds.\n";
 					counter++;
 				}
+				//checks if the coordinate is already occupied
 				else if(m_player1PersonalKey[m_shipRow + j][m_shipCol] == 'S' )
 				{
 					cout << "There's already a ship there.\n";
 					counter++;
 				}
 			}
-			if(m_shipOrientation == 2)
+			if(m_shipOrientation == 2)				//horizontal orientation
 			{
+				//checcks if the ship is out of bounds
 				if ( ( (m_shipCol + j) < 0 || (m_shipCol + j) >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
 				{
 					cout << "Out of Bounds.\n";
 					counter++;
 				}
+				//checks if the coordinate is already occupied
 				else if( m_player1PersonalKey[m_shipRow][m_shipCol + j] == 'S' )
 				{
 					cout << "There's already a ship there.\n";
@@ -95,11 +99,11 @@ void Executive::boardSetup()
 				}
 			}
 		}
-        if (counter != 0)
+        if (counter != 0)			//prints if placement was invalid
         {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
-        else
+        else					//if placement was valid, then the ship is placed
         {
-			for(int j=0; j<=i; j++)
+			for(int j=0; j<=i; j++)			//for loop places each section of the ship
 			{
 				if(m_shipOrientation == 1)
 				{m_player1PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
@@ -107,18 +111,19 @@ void Executive::boardSetup()
 				{m_player1PersonalKey[m_shipRow][m_shipCol + j] = 'S';}
 			}
         }
-    }while (counter != 0);
+    }while (counter != 0);			//repeats until the ship is placed
   }
   
   cout << string(50,'\n');
   //--------------------------------------------
   //PLAYER 2 SETS THEIR BOARD BELOW
   //--------------------------------------------
+  //same code as above, but for player 2
   
-  printPlayer2PersonalKey();
+  printPlayer2PersonalKey();			//prints player2's board
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
-		do
+		do				//allows the user to choose the orientation of the ship
 		{
 			cout << "\n1) Vertical\n";
 			cout << "2) Horizontal\n";
@@ -130,17 +135,17 @@ void Executive::boardSetup()
    
 	do
     {
-        cout << "Player 2: Please enter column (A-J) for ship " << (i + 1) << ": ";
+        cout << "Player 2: Please enter column (A-J) for ship " << (i + 1) << ": ";			//gets the column for placement
         cin >> m_tempCol;
         m_shipCol = (int(m_tempCol) - 65);
 
-        cout << "Player 2: Please enter row for ship " << (i + 1) << ": ";
+        cout << "Player 2: Please enter row for ship " << (i + 1) << ": ";				//gets the row for placement
         m_shipRow = validateInput()-1;
 		
 		counter = 0;
 		for(int j=0; j<=i; j++)
 		{
-			if(m_shipOrientation == 1)
+			if(m_shipOrientation == 1)			//vertical orientation
 			{
 				if ( (m_shipCol < 0 || m_shipCol >= m_cols) || ( (m_shipRow + j) < 0 || (m_shipRow + j) >= m_rows) )
 				{
@@ -153,7 +158,7 @@ void Executive::boardSetup()
 					counter++;
 				}
 			}
-			if(m_shipOrientation == 2)
+			if(m_shipOrientation == 2)			//horizontal orientation
 			{
 				if ( ( (m_shipCol + j) < 0 || (m_shipCol + j) >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
 				{
@@ -171,7 +176,7 @@ void Executive::boardSetup()
         {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
         else
         {
-			for(int j=0; j<=i; j++)
+			for(int j=0; j<=i; j++)			//places each section of the ship
 			{
 				if(m_shipOrientation == 1)
 				{m_player2PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
@@ -192,11 +197,10 @@ void Executive::startMenu()
 	cout << "\n\n";
 	cout << "Welcome to the Game!\n";
 	
-	printRules();
+	printRules();			//prints information about the game
   
   //--------------------------------------------
   //Obtains number of ships to play with from user
-  
   do
   {
     cout << "Please input amount of ships (1-5) to play with: ";
@@ -234,7 +238,7 @@ void Executive::playGame()
     if (checkIfFinished() == false)
     {player2Turn();}
   } while(checkIfFinished() == false);
-  gameOver();
+  gameOver();		//calls game ending
 }
 void Executive::gameOver()
 {
@@ -257,17 +261,17 @@ void Executive::printPlayer1PersonalKey()
   cout << "---------------------------------------------------------------------------------" << '\n';
 
   cout << '\t';
-  for (int i = 0; i < m_cols; i++)
+  for (int i = 0; i < m_cols; i++)		//prints the column coordinates (A-J) on the top of the board
   {
-    cout << char(i + 65) << '\t';
+    cout << char(i + 65) << '\t';		//converts ascii letters(A-J) to numbers (0-9)
   }
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << (i+1) << '\t';
+    cout << (i+1) << '\t';				//prints the row coordinates (1-10) on the side of the board
     for (int j = 0; j < m_cols; j++)
     {
-      cout << m_player1PersonalKey[i][j] << '\t';
+      cout << m_player1PersonalKey[i][j] << '\t';		//prints the grid of the players board
     }
     cout << '\n';
   }
@@ -280,17 +284,17 @@ void Executive::printPlayer2PersonalKey()
   cout << "---------------------------------------------------------------------------------" << '\n';
 
   cout << '\t';
-  for (int i = 0; i < m_cols; i++)
+  for (int i = 0; i < m_cols; i++)			//prints the column coordinates (A-J) on the top of the board	
   {
-    cout << char(i + 65) << '\t';
+    cout << char(i + 65) << '\t';			//converts ascii letters(A-J) to numbers (0-9)
   }
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << (i+1) << '\t';
+    cout << (i+1) << '\t';					//prints the row coordinates (1-10) on the side of the board
     for (int j = 0; j < m_cols; j++)
     {
-      cout << m_player2PersonalKey[i][j] << '\t';
+      cout << m_player2PersonalKey[i][j] << '\t';		//prints the grid of the players board
     }
     cout << '\n';
   }
@@ -300,19 +304,18 @@ void Executive::printPlayer1OpponentKey()
 {
   cout << "----------------------------[Player 1's Battle Grid:]----------------------------" << '\n';
   cout << "---------------------------------------------------------------------------------" << '\n';
-
   cout << '\t';
-  for (int i = 0; i < m_cols; i++)
+  for (int i = 0; i < m_cols; i++)			//prints the column coordinates (A-J) on the top of the board
   {
-    cout << char(i + 65) << '\t';
+    cout << char(i + 65) << '\t';			//converts ascii letters(A-J) to numbers (0-9)
   }
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << (i+1) << '\t';
+    cout << (i+1) << '\t';					//prints the row coordinates (1-10) on the side of the board
     for (int j = 0; j < m_cols; j++)
     {
-      cout << m_player1OpponentKey[i][j] << '\t';
+      cout << m_player1OpponentKey[i][j] << '\t';			//prints the grid of the opponents board
     }
     cout << '\n';
   }
@@ -323,17 +326,17 @@ void Executive::printPlayer2OpponentKey()
   cout << "----------------------------[Player 2's Battle Grid:]----------------------------" << '\n';
   cout << "---------------------------------------------------------------------------------" << '\n';
   cout << '\t';
-  for (int i = 0; i < m_cols; i++)
+  for (int i = 0; i < m_cols; i++)				//prints the column coordinates (A-J) on the top of the board
   {
-    cout << char(i + 65) << '\t';
+    cout << char(i + 65) << '\t';				//converts ascii letters(A-J) to numbers (0-9)
   }
   cout << '\n';
   for (int i = 0; i < m_rows; i++)
   {
-    cout << (i+1) << '\t';
+    cout << (i+1) << '\t';						//prints the row coordinates (1-10) on the side of the board
     for (int j = 0; j < m_cols; j++)
     {
-      cout << m_player2OpponentKey[i][j] << '\t';
+      cout << m_player2OpponentKey[i][j] << '\t';			//prints the grid of the opponents board
     }
     cout << '\n';
   }
@@ -344,27 +347,21 @@ void Executive::player1Turn()
   cout << "Player 1 turn.\n";
   do
   {
-    printMenu();
+    printMenu();					//prints the menu of options
     m_playerChoice = validateInput();
 
-      if (m_playerChoice == 1)
-      {
-        player1Attack();
-      }
-      else if (m_playerChoice == 2)
+      if (m_playerChoice == 1)		//attack
+      {player1Attack();}
+      else if (m_playerChoice == 2)			//print boards
       {
         printPlayer1OpponentKey();
         printPlayer1PersonalKey();
       }
       else if (m_playerChoice == 3)
-      {
-        printRules();
-      }
+      {printRules();}						//see rules and info
       else
-      {
-        cout << "Invalid entry.\n";
-      }
-    } while (m_playerChoice != 1);
+      {cout << "Invalid entry.\n";}
+    } while (m_playerChoice != 1);			//repeats until player1's turn is over (after they attack)
 
 }
 void Executive::player2Turn()
@@ -372,27 +369,21 @@ void Executive::player2Turn()
   cout << "Player 2 turn.\n";
   do
   {
-    printMenu();
+    printMenu();							//prints the menu of options
     m_playerChoice = validateInput();
 
-      if (m_playerChoice == 1)
-      {
-        player2Attack();
-      }
-      else if (m_playerChoice == 2)
+      if (m_playerChoice == 1)				//attack
+      {player2Attack();}
+      else if (m_playerChoice == 2)			//prints boards
       {
         printPlayer2OpponentKey();
         printPlayer2PersonalKey();
       }
-      else if (m_playerChoice == 3)
-      {
-        printRules();
-      }
+      else if (m_playerChoice == 3)			//see rules and info
+      {printRules();}
       else
-      {
-        cout << "Invalid entry.\n";
-      }
-    } while (m_playerChoice != 1);
+      {cout << "Invalid entry.\n";}
+    } while (m_playerChoice != 1);			//repeats until player2's turn is over (after they attack)
 
 }
 void Executive::player1Attack()
@@ -400,29 +391,33 @@ void Executive::player1Attack()
   //1) attack player2
   do
   {
-	  counter = 0;
-    cout << "Player 1: Please enter column (A-J) to attack player 2: ";
+	  counter = 0;					//counter used to check if attack was valid
+	  
+    cout << "Player 1: Please enter column (A-J) to attack player 2: ";				//gets the column to attack
     cin >> m_tempCol;
     m_shipCol = (int(m_tempCol) - 65);
-    cout << "Please enter row (1-10) to attack player 2: ";
+    cout << "Please enter row (1-10) to attack player 2: ";						//gets the row to attack
     m_shipRow = validateInput()-1;
 
-    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+	//checks if coordinates are in bounds
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )			
     {
       cout << "Invalid coordinate entry!" << '\n';
 	  counter++;
     }
+	//checks if the coordinate was already hit
 	else if ( m_player2PersonalKey[m_shipRow][m_shipCol] == 'X' )
 	{
 		cout << "Coordinate Already Hit. Aim Elsewhere!\n";
 		counter++;
 	}
+	//checks if the coordinate was already shot
 	else if ( m_player1OpponentKey[m_shipRow][m_shipCol] == '~' )
 	{
 		cout << "Coordinate Already Shot. Aim Elsewhere!\n";
 		counter++;
 	}
-  }while (counter != 0);
+  }while (counter != 0);		//repeats until the shot is valid
 
   cout << string(50,'\n');
 
@@ -448,29 +443,33 @@ void Executive::player2Attack()
   //1) attack player1
   do
   {
-	  counter = 0;
-    cout << "Player 2: Please enter column (A-J) to attack player 1: ";
+	  counter = 0;							//counter used to check if attack was valid
+	  
+    cout << "Player 2: Please enter column (A-J) to attack player 1: ";			//gets the column to attack
     cin >> m_tempCol;
     m_shipCol = (int(m_tempCol) - 65);
-    cout << "Please enter row (1-10) to attack player 1: ";
+    cout << "Please enter row (1-10) to attack player 1: ";					//gets the row to attack
     m_shipRow = validateInput()-1;
 
+	//checks if coordinates are in bounds
     if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
     {
       cout << "Invalid coordinate entry!" << '\n';
 	  counter++;
     }
+	//checks if the coordinate was already hit
 	else if ( m_player1PersonalKey[m_shipRow][m_shipCol] == 'X' )
 	{
 		cout << "Coordinate Already Hit. Aim Elsewhere!\n";
 		counter++;
 	}
+	//checks if the coordinate was already shot
 	else if ( m_player2OpponentKey[m_shipRow][m_shipCol] == '~' )
 	{
 		cout << "Coordinate Already Shot. Aim Elsewhere!\n";
 		counter++;
 	}
-  }while (counter != 0);
+  }while (counter != 0);				//repeats until the shot is valid
 
   cout << string(50,'\n');
 
@@ -496,18 +495,15 @@ bool Executive::checkIfFinished()
   m_player1ShipsRemaining = 0;
   m_player2ShipsRemaining = 0;
 
+	//checks the entire board for remaining ships
   for (int i = 0; i < m_rows; i++)
   {
     for (int j = 0; j < m_cols; j++)
     {
       if (m_player1PersonalKey[i][j] == 'S')
-      {
-        m_player1ShipsRemaining ++;
-      }
+      {m_player1ShipsRemaining ++;}
       if (m_player2PersonalKey[i][j] == 'S')
-      {
-        m_player2ShipsRemaining ++;
-      }
+      {m_player2ShipsRemaining ++;}
     }
   }
   if (m_player1ShipsRemaining == 0)
@@ -521,15 +517,13 @@ bool Executive::checkIfFinished()
     return(true);
   }
   else
-  {
-    return (false);
-  }
+  {return (false);}
 }
-int Executive::validateInput()
+int Executive::validateInput()			//checks if interger input is valid
 {
 	int choice;
     std::cin >> choice;
-    while ( std::cin.fail() )
+    while ( std::cin.fail() )			//repeats until a valid integer is inputed
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -537,6 +531,6 @@ int Executive::validateInput()
         std::cin >> choice;
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return(choice);
+	return(choice);				//returns the valid input
 }
 

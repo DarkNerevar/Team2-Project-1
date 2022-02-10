@@ -3,4 +3,10 @@ The battleship game is created in c++ and is intended to be played in a terminal
 The program is function oriented and uses arrays to store the game information.
 
 
+
 Program Functions:
+
+Constructor: Initializes both player's personal and opponent boards (2D arrays). calls the function to set up the board and then calls the function to play the game.
+
+
+

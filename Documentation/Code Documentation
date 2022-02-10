@@ -1,0 +1,6 @@
+System overview:
+The battleship game is created in c++ and is intended to be played in a terminal.
+The program is function oriented and uses arrays to store the game information.
+
+
+Program Functions:

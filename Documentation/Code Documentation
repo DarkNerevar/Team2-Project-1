@@ -6,8 +6,45 @@ The program is function oriented and uses arrays to store the game information.
 
 Program Functions:
 
-Constructor: Initializes both player's personal and opponent boards (2D arrays). 
+Constructor: Creates the 2D arrays for both player's personal and opponent boards. 
 calls the function to set up the board and then calls the function to play the game.
 
+boardSetup(): Begins by filling the arrays with default symbols (~,?)
+Prints the start menu, then has each player set their ships. Player 1 then Player 2.
+Players input the orientation, and coordinates for each ship to be placed. 
+Players will be prompted for ship placement until the placement is valid.
 
+startMenu(): Prints the title of the game, then the information and rules.
+Obtains the number of ships the game is to be played with.
+
+printRules(): Prints the rules and information for the game.
+
+playGame(): Loop checks if either player has won, if not turns alternate as normal.
+Once a player wins the game ends.
+
+gameOver(): prints that the game is over, and prints which player won.
+
+printMenu(): prints menu of options that each player has on their turn. 
+
+printPlayer1PersonalKey(): Prints player 1's board with ships exposed during player 1's turn. 
+
+printPlayer2PersonalKey(): Prints player 2's board with ships exposed during player 2's turn.
+
+printPlayer1OpponentKey(): Prints player 2's board with ships hidden during player 1's turn.
+
+printPlayer2OpponentKey(): Prints player 1's board with ships hidden during player 2's turn.
+
+player1Turn(): prints the menu of options for the player and executes the player's choice. 
+
+player2Turn(): prints the menu of options for the player and executes the player's choice. 
+
+player1Attack(): has the player input coordinates to attack. If input is invalid(out of bounds, already shot/hit) the player must input different coordinates. The boards are updated for each shot. 
+A message for a miss or a hit is displayed. Then the player's turn is over. 
+
+player2Attack(): has the player input coordinates to attack. If input is invalid(out of bounds, already shot/hit) the player must input different coordinates. The boards are updated for each shot. 
+A message for a miss or a hit is displayed. Then the player's turn is over. 
+
+checkIfFinsihed(): checks every coordinates of the board for remaining ships. If a player hits all of the opponents ships the game ends. 
+
+validateInput(): takes integer input and the loop clears the input and asks for different input until the input is a valid integer. 
 

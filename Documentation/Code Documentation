@@ -2,6 +2,13 @@ System overview:
 The battleship game is created in c++ and is intended to be played in a terminal.
 The program is function oriented and uses arrays to store the game information.
 
+First, the board is setup. After players set their ships gameplay begins.
+Players take turns attacking each other. On each turn players can view their boards.
+The game loop runs until one player loses all of their ships. 
+
+There are 4 board printing functions two for each player. One for your own board one for your opponents. 
+There are a few printing functions for the start, the options menu, and the game end. 
+There is inputValidation for integers.
 
 
 Program Functions:

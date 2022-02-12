@@ -72,6 +72,7 @@ class Executive
       
       delete[] m_player1Ships;
       delete[] m_player2Ships;
+
       delete[] m_player1PersonalKey;
       delete[] m_player2PersonalKey;
       delete[] m_player1OpponentKey;

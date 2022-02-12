@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <string>
 #include "stdlib.h"
 using namespace std;
 
@@ -44,6 +45,7 @@ void Executive::boardSetup()
   //PLAYER 1 SETS THEIR BOARD BELOW
   //--------------------------------------------
   printPlayer1PersonalKey();			//prints player1's board
+  int shipCount = 0;
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
 		do							//has the user input the orientation for ship placement
@@ -60,9 +62,9 @@ void Executive::boardSetup()
     {
         cout << "Player 1: Please enter column (A-J) for ship " << (i + 1) << ": ";			//user chooses column
         cin >> m_tempCol;
-        m_shipCol = (int(m_tempCol) - 65);
+        m_shipCol = (int(toupper(m_tempCol)) - 65);
 
-        cout << "Player 1: Please enter row for ship " << (i + 1) << ": ";					//user chooses row
+        cout << "Player 1: Please enter row (1-10) for ship " << (i + 1) << ": ";					//user chooses row
         m_shipRow = validateInput()-1;
 		
 		counter = 0;								//counter is used to check if placement is valid
@@ -103,17 +105,25 @@ void Executive::boardSetup()
         {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
         else					//if placement was valid, then the ship is placed
         {
-			for(int j=0; j<=i; j++)			//for loop places each section of the ship
-			{
-				if(m_shipOrientation == 1)
-				{m_player1PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
-				if(m_shipOrientation == 2)
-				{m_player1PersonalKey[m_shipRow][m_shipCol + j] = 'S';}
-			}
+          for(int j=0; j<=i; j++)			//for loop places each section of the ship
+          {
+            if(m_shipOrientation == 1)
+            {
+              m_player1PersonalKey[m_shipRow + j][m_shipCol] = 'S';
+              string coord = char((m_shipCol)+65)+to_string(m_shipRow+j+1);
+              m_player1Ships[shipCount] = coord;
+            }
+            if(m_shipOrientation == 2)
+            {
+              m_player1PersonalKey[m_shipRow][m_shipCol + j] = 'S';
+              string coord =char((m_shipCol+j)+65)+to_string(m_shipRow+1);
+              m_player1Ships[shipCount] = coord;
+            }
+            shipCount++;
+          }
         }
     }while (counter != 0);			//repeats until the ship is placed
   }
-  
   cout << string(50,'\n');
   //--------------------------------------------
   //PLAYER 2 SETS THEIR BOARD BELOW
@@ -121,6 +131,7 @@ void Executive::boardSetup()
   //same code as above, but for player 2
   
   printPlayer2PersonalKey();			//prints player2's board
+  shipCount = 0;
   for (int i = 0; i < m_shipAmount; i++) //#ships to set
   {
 		do				//allows the user to choose the orientation of the ship
@@ -137,9 +148,9 @@ void Executive::boardSetup()
     {
         cout << "Player 2: Please enter column (A-J) for ship " << (i + 1) << ": ";			//gets the column for placement
         cin >> m_tempCol;
-        m_shipCol = (int(m_tempCol) - 65);
+        m_shipCol = (int(toupper(m_tempCol)) - 65);
 
-        cout << "Player 2: Please enter row for ship " << (i + 1) << ": ";				//gets the row for placement
+        cout << "Player 2: Please enter row (1-10) for ship " << (i + 1) << ": ";				//gets the row for placement
         m_shipRow = validateInput()-1;
 		
 		counter = 0;
@@ -176,17 +187,25 @@ void Executive::boardSetup()
         {cout << "Placement is not valid! Please enter a valid coordinate." << '\n';}
         else
         {
-			for(int j=0; j<=i; j++)			//places each section of the ship
-			{
-				if(m_shipOrientation == 1)
-				{m_player2PersonalKey[m_shipRow + j][m_shipCol] = 'S';}
-				if(m_shipOrientation == 2)
-				{m_player2PersonalKey[m_shipRow][m_shipCol + j] = 'S';}
-			}
+          for(int j=0; j<=i; j++)			//places each section of the ship
+          {
+            if(m_shipOrientation == 1)
+            {
+              m_player2PersonalKey[m_shipRow + j][m_shipCol] = 'S';
+              string coord = char((m_shipCol)+65)+to_string(m_shipRow+j+1);
+              m_player2Ships[shipCount] = coord;
+            }
+            if(m_shipOrientation == 2)
+            {
+              m_player2PersonalKey[m_shipRow][m_shipCol + j] = 'S';
+              string coord = char((m_shipCol+j)+65)+to_string(m_shipRow+1);
+              m_player2Ships[shipCount] = coord;
+            }
+            shipCount++;
+          }
         }
     }while (counter != 0);
   }
-  
   cout << string(50,'\n');
 }
 void Executive::startMenu()
@@ -211,6 +230,7 @@ void Executive::startMenu()
     }
 
   } while (m_shipAmount < 1 || m_shipAmount > 5);
+  setupShipsArr();
   cout << '\n';
 }
 void Executive::printRules()
@@ -395,7 +415,7 @@ void Executive::player1Attack()
 	  
     cout << "Player 1: Please enter column (A-J) to attack player 2: ";				//gets the column to attack
     cin >> m_tempCol;
-    m_shipCol = (int(m_tempCol) - 65);
+    m_shipCol = (int(toupper(m_tempCol)) - 65);
     cout << "Please enter row (1-10) to attack player 2: ";						//gets the row to attack
     m_shipRow = validateInput()-1;
 
@@ -424,11 +444,22 @@ void Executive::player1Attack()
   //2) change player2's personal key if hit, and player1's opponent key regardless
   if ( m_player2PersonalKey[m_shipRow][m_shipCol] == 'S' )
   {
-    cout << "----------------------\n";
-    cout << "Player 1 hit Player 2's ship!" << '\n';
-    cout << "----------------------\n";
     m_player2PersonalKey[m_shipRow][m_shipCol] = 'X';
     m_player1OpponentKey[m_shipRow][m_shipCol] = 'X';
+    hit(toupper(m_tempCol), m_shipRow+1, 1);
+    bool tempSunk = isSunk(1);
+    if(tempSunk)
+    {
+      cout << "----------------------\n";
+      cout << "Player 1 sunk Player 2's ship!" << '\n';
+      cout << "----------------------\n";
+    }
+    else
+    {
+      cout << "----------------------\n";
+      cout << "Player 1 hit Player 2's ship!" << '\n';
+      cout << "----------------------\n";
+    }
   }
   else
   {
@@ -447,7 +478,7 @@ void Executive::player2Attack()
 	  
     cout << "Player 2: Please enter column (A-J) to attack player 1: ";			//gets the column to attack
     cin >> m_tempCol;
-    m_shipCol = (int(m_tempCol) - 65);
+    m_shipCol = (int(toupper(m_tempCol)) - 65);
     cout << "Please enter row (1-10) to attack player 1: ";					//gets the row to attack
     m_shipRow = validateInput()-1;
 
@@ -476,11 +507,22 @@ void Executive::player2Attack()
   //2) change player1's personal key if hit, and player2's personal key regardless
   if ( m_player1PersonalKey[m_shipRow][m_shipCol] == 'S' )
   {
-    cout << "----------------------\n";
-    cout << "Player 2 hit Player 1's ship!" << '\n';
-    cout << "----------------------\n";
     m_player1PersonalKey[m_shipRow][m_shipCol] = 'X';
     m_player2OpponentKey[m_shipRow][m_shipCol] = 'X';
+    hit(toupper(m_tempCol), m_shipRow+1, 2);
+    bool tempSunk = isSunk(2);
+    if(tempSunk)
+    {
+      cout << "----------------------\n";
+      cout << "Player 2 sunk Player 1's ship!" << '\n';
+      cout << "----------------------\n";
+    }
+    else
+    {
+      cout << "----------------------\n";
+      cout << "Player 2 hit Player 1's ship!" << '\n';
+      cout << "----------------------\n";
+    }
   }
   else
   {
@@ -534,3 +576,130 @@ int Executive::validateInput()			//checks if interger input is valid
 	return(choice);				//returns the valid input
 }
 
+//Sets up an array with coords to where all the ship segments are
+void Executive::setupShipsArr()
+{
+  //for loop adds the amount of shipsegments to get the array size
+  // 1 ship = 1; 2 ships = 3; 3 ships = 6; 4 ships = 10; 5 ships = 15
+  for(int i = 0; i <= m_shipAmount; i++)
+  {
+    m_shipArrSize += i;
+  }
+
+  m_player1Ships = new string[m_shipArrSize];
+  m_player2Ships = new string[m_shipArrSize];
+}
+
+//if the ship segment is hit, changes the element that was hit to "L"
+ void Executive::hit(char col,int row,int player)
+ {
+    string coord = col+to_string(row);
+  if(player == 1) //player 1
+  {
+    for(int i = 0; i < m_shipArrSize; i++)
+    {
+      if(m_player2Ships[i] == coord)
+      {
+        m_player2Ships[i] = "L";
+      }
+    }
+  }
+  else //player 2
+  {
+    for(int i = 0; i < m_shipArrSize; i++)
+    {
+      if(m_player1Ships[i] == coord)
+      {
+        m_player1Ships[i] = "L";
+      }
+    }
+  }
+ }
+
+//checks to see if a whole ship has sunk
+ bool Executive::isSunk(int player)
+ {
+   int count = 1;
+   if(player == 1) //checks if player 1 sunk one of player 2's ships
+   {
+     //goes through the array to see if the ship has sunk
+     while(count <= m_shipArrSize)
+     {
+        int hit = 0;
+        int start, end;
+        getArrRange(count, &start, &end);
+        for(int i = start; i <= end; i++)
+        {
+          if(m_player2Ships[i] == "L")
+          {
+            hit++;
+          }
+        }
+        // if the hit amount == count, changes "L" to "X" so it doesn't count it as sunk again
+        if(hit == count)
+        {
+          for(int i = start; i <= end; i++)
+          {
+            m_player2Ships[i] = "X";
+          }
+          return true;
+        }
+        count++;
+      }
+   }
+   else //checks if player 2 sunk one of player 1's ships
+   {
+      while(count <= m_shipArrSize)
+      {
+        int hit = 0;
+        int start, end;
+        getArrRange(count, &start, &end);
+        for(int i = start; i <= end; i++)
+        {
+          if(m_player1Ships[i] == "L")
+          {
+            hit++;
+          }
+        }
+        if(hit == count)
+        {
+          for(int i = start; i <= end; i++)
+          {
+            m_player1Ships[i] = "X";
+          }
+          return true;
+        }
+        count++;
+      }
+    }
+    return false;
+ }
+
+//switch statement to get the range of the ship segments depending on the size of the ships
+ void Executive::getArrRange(int count, int *start, int *end)
+ {
+   //depending on count sets the start and end variables. Used to traverse the array of a specific ship
+   switch(count)
+   {
+     case 1:
+      *start = 0;
+      *end = 0;
+      break;
+    case 2:
+      *start = 1;
+      *end = 2;
+      break;
+    case 3:
+      *start = 3;
+      *end = 5;
+      break;
+    case 4:
+      *start = 6;
+      *end = 9;
+      break;
+    case 5:
+      *start = 10;
+      *end = 14;
+      break;
+   }
+ }

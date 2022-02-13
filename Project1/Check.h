@@ -44,7 +44,7 @@ bool Executive::checkIfFinished()
    if(player == 1) //checks if player 1 sunk one of player 2's ships
    {
      //goes through the array to see if the ship has sunk
-     while(count <= m_shipArrSize)
+     while(count < m_shipArrSize)
      {
         int hit = 0;
         int start, end;
@@ -70,7 +70,7 @@ bool Executive::checkIfFinished()
    }
    else //checks if player 2 sunk one of player 1's ships
    {
-      while(count <= m_shipArrSize)
+      while(count < m_shipArrSize)
       {
         int hit = 0;
         int start, end;

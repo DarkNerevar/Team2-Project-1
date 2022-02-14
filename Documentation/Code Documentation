@@ -1,57 +1,54 @@
 System overview:
 The battleship game is created in c++ and is intended to be played in a terminal.
-The program is function oriented and uses arrays to store the game information.
+The program is uses arrays to store the game information and several classes for different types of functions.
 
 First, the board is setup. After players set their ships gameplay begins.
 Players take turns attacking each other. On each turn players can view their boards.
 The game loop runs until one player loses all of their ships. 
 
-There are 4 board printing functions two for each player. One for your own board one for your opponents. 
-There are a few printing functions for the start, the options menu, and the game end. 
-There is inputValidation for integers.
 
+Program Classes:
 
-Program Functions:
+Executive class:
+The executive class creates the 2D arrays for the boards.
+Defines the startMenu function which takes in the amount of ships to be played with.
+Defines printRules, which gives information. 
+Defines printMenu, which prints the player's turn options.
+Defines validateInput, used for validating integer input.
+Defines setupShipArr, which keeps track of each player's ships.
+Defines hit function, for hitting ships.
+Defines getArrRange, which gets the health information for a desired ship
 
-Constructor: Creates the 2D arrays for both player's personal and opponent boards. 
-calls the function to set up the board and then calls the function to play the game.
+Printboard class:
+printPlayer1PersonalKey(): Prints player 1's board with ships exposed during player 1's turn. 
+printPlayer2PersonalKey(): Prints player 2's board with ships exposed during player 2's turn.
+printPlayer1OpponentKey(): Prints player 2's board with ships hidden during player 1's turn.
+printPlayer2OpponentKey(): Prints player 1's board with ships hidden during player 2's turn.
 
+BoardSetup class:
 boardSetup(): Begins by filling the arrays with default symbols (~,?)
 Prints the start menu, then has each player set their ships. Player 1 then Player 2.
 Players input the orientation, and coordinates for each ship to be placed. 
 Players will be prompted for ship placement until the placement is valid.
+Defines origCopy(), which creates copy boards
 
-startMenu(): Prints the title of the game, then the information and rules.
-Obtains the number of ships the game is to be played with.
-
-printRules(): Prints the rules and information for the game.
-
+Ingame class:
+Class is in charge of running the functions of the game.
 playGame(): Loop checks if either player has won, if not turns alternate as normal.
 Once a player wins the game ends.
-
+earlyTermination() allows the players to end the program before the game is finished.
 gameOver(): prints that the game is over, and prints which player won.
-
-printMenu(): prints menu of options that each player has on their turn. 
-
-printPlayer1PersonalKey(): Prints player 1's board with ships exposed during player 1's turn. 
-
-printPlayer2PersonalKey(): Prints player 2's board with ships exposed during player 2's turn.
-
-printPlayer1OpponentKey(): Prints player 2's board with ships hidden during player 1's turn.
-
-printPlayer2OpponentKey(): Prints player 1's board with ships hidden during player 2's turn.
-
 player1Turn(): prints the menu of options for the player and executes the player's choice. 
-
 player2Turn(): prints the menu of options for the player and executes the player's choice. 
 
+Attack class:
 player1Attack(): has the player input coordinates to attack. If input is invalid(out of bounds, already shot/hit) the player must input different coordinates. The boards are updated for each shot. 
-A message for a miss or a hit is displayed. Then the player's turn is over. 
-
+A message for a miss, hit, or sink is displayed. Then the player's turn is over. 
 player2Attack(): has the player input coordinates to attack. If input is invalid(out of bounds, already shot/hit) the player must input different coordinates. The boards are updated for each shot. 
-A message for a miss or a hit is displayed. Then the player's turn is over. 
+A message for a miss, hit, or sink is displayed. Then the player's turn is over. 
+markPlayer_OpponentShipSunk() marks on the board if a ship is sunk.
 
+Check class:
 checkIfFinsihed(): checks every coordinates of the board for remaining ships. If a player hits all of the opponents ships the game ends. 
-
-validateInput(): takes integer input and the loop clears the input and asks for different input until the input is a valid integer. 
-
+checkEarlyTermination(): checks if the game should be ended early.
+isSunk(): checks if the player has sunk the ship they hit.

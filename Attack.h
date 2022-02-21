@@ -143,7 +143,7 @@ void Executive::player2Attack()
 }
 
 
-void Executive::player2ComputerAttackDifficulty1()
+void Executive::player2ComputerAttackDifficulty1() //randomly fires
 {
   //1) attack player1
   do
@@ -203,7 +203,7 @@ void Executive::player2ComputerAttackDifficulty1()
   }
 }
 
-void Executive::player2ComputerAttackDifficulty2()
+void Executive::player2ComputerAttackDifficulty2() // this method randomly fires and then if there is a hit it fires around that hit until there is another hit, and does that until a ship is sunk, and then repeats until all ships are sunk.
 {
   //1) attack player1 if the a hit hasn't occured since the last sunk ship (or the begining of the game)
   if(m_computerHit == 0)
@@ -539,6 +539,7 @@ void Executive::player2ComputerAttackDifficulty3()
   do
   {
 	  counter = 0;							//counter used to check if attack was valid
+	  //Finds an unhit coordinate to target
 	for (int i = 0; i < m_rows; i++)
 		{	
 			for (int j = 0; j < m_cols; j++)

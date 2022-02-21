@@ -12,7 +12,11 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <chrono>
+#include <thread>
 using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono;
 class Executive
 {
     private:
@@ -81,6 +85,7 @@ class Executive
       void player2Turn();
       void player1Attack();
       void player2Attack();
+	  void player2ComputerAttack1();
       void markPlayer1OpponentShipSunk();
       void markPlayer2OpponentShipSunk();
       bool checkIfFinished();

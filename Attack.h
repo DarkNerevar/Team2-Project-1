@@ -70,6 +70,7 @@ void Executive::player1Attack()
     cout << "-------------------------\n";
     cout << "Player 1 missed!" << '\n';
     cout << "-------------------------\n";
+	sleep_for(seconds(3));
     m_player1OpponentKey[m_shipRow][m_shipCol] = '~';
   }
 }
@@ -138,6 +139,67 @@ void Executive::player2Attack()
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
   }
 }
+
+
+void Executive::player2ComputerAttack1()
+{
+  //1) attack player1
+  do
+  {
+	  counter = 0;							//counter used to check if attack was valid
+
+    m_shipCol = rand() % 10;
+    m_shipRow = rand() % 10;
+
+	//checks if coordinates are in bounds
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+    {
+	  counter++;
+    }
+	//checks if the coordinate was already hit
+	else if ( m_player1PersonalKey[m_shipRow][m_shipCol] == 'X' )
+	{
+		counter++;
+	}
+	//checks if the coordinate was already shot
+	else if ( m_player2OpponentKey[m_shipRow][m_shipCol] == '~' )
+	{
+		counter++;
+	}
+  }while (counter != 0);				//repeats until the shot is valid
+
+  cout << string(50,'\n');
+
+  //2) change player1's personal key if hit, and player2's personal key regardless
+  if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
+  {
+    m_tempNumSunk = m_player1PersonalKey[m_shipRow][m_shipCol];
+    m_player1PersonalKey[m_shipRow][m_shipCol] = 'X';
+    m_player2OpponentKey[m_shipRow][m_shipCol] = 'X';
+    hit(toupper(m_tempCol), m_shipRow+1, 2);
+    bool tempSunk = isSunk(2);
+    if(tempSunk)
+    {
+      cout << "----------------------\n";
+      cout << "Player 2 sunk Player 1's ship!" << '\n';
+      cout << "----------------------\n";
+      markPlayer2OpponentShipSunk();
+    }
+    else
+    {
+      cout << "----------------------\n";
+      cout << "Player 2 hit Player 1's ship!" << '\n';
+      cout << "----------------------\n";
+    }
+  }
+  else
+  {
+    cout << "-------------------------\n";
+    cout << "Player 2 missed!" << '\n';
+    cout << "-------------------------\n";
+    m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+  }
+}
 void Executive::markPlayer1OpponentShipSunk()
 {
   for (int i = 0; i < m_rows; i++)
@@ -151,6 +213,7 @@ void Executive::markPlayer1OpponentShipSunk()
     }
   }
 }
+
 void Executive::markPlayer2OpponentShipSunk()
 {
   for (int i = 0; i < m_rows; i++)

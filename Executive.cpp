@@ -103,9 +103,7 @@ void Executive::printRules()
 {
 	cout << "\n--------Rules & Information---------\n";
 	cout << "The Objective of the game is to sink all of your opponents ships before they sink yours.\n";
-	cout << "During your turn, you will be asked to input coordinates to fire upon.\n";
 	cout << "To start the game you will be asked how many ships you want in play.\n";
-	cout << "Then start the game you will be asked how many ships you want in play.\n";
 	cout << "Then each player will take turns placing their ships.\n";
 	cout << "Ships are placed either vertically or horizontally, you will be given the choice.\n";
 	cout << "Players will then input the coordinates for their ship placement.\n";
@@ -113,6 +111,7 @@ void Executive::printRules()
 	cout << "The orientation of the ship determines where the back of the ship is located\n";
 	cout << "The ship will occupy the coordinates below or to the right of the tip of each ship.\n";
 	cout << "Once all ships are placed, each player will take turns attacking.\n";
+	cout << "During your turn, you will be asked to input coordinates to fire upon.\n";
 	cout << "The first player to destroy all of their opponent's ships wins.\n";
 	cout << "Have fun!\n\n";
 }
@@ -121,16 +120,16 @@ void Executive::printRules1Player()
 {
 	cout << "\n--------Rules & Information---------\n";
 	cout << "The Objective of the game is to sink all of your opponents ships before they sink yours.\n";
-	cout << "During your turn, you will be asked to input coordinates to fire upon.\n";
 	cout << "To start the game you will be asked how many ships you want in play.\n";
-	cout << "Then start the game you will be asked how many ships you want in play.\n";
-	cout << "Then each player will take turns placing their ships.\n";
+	cout << "Then you will be asked what difficulty level you would like to play on.\n";
+	cout << "Then you will place your ships.\n";
 	cout << "Ships are placed either vertically or horizontally, you will be given the choice.\n";
-	cout << "Players will then input the coordinates for their ship placement.\n";
+	cout << "You will then input the coordinates for your ship placement.\n";
 	cout << "Coordinates for ship placement correspond to the front tip of each ship.\n";
 	cout << "The orientation of the ship determines where the back of the ship is located\n";
 	cout << "The ship will occupy the coordinates below or to the right of the tip of each ship.\n";
-	cout << "Once all ships are placed, each player will take turns attacking.\n";
+	cout << "Once all ships are placed, each player (you and the computer opponent) will take turns attacking.\n";
+	cout << "During your turn, you will be asked to input coordinates to fire upon.\n";
 	cout << "The first player to destroy all of their opponent's ships wins.\n";
 	cout << "Have fun!\n\n";
 }

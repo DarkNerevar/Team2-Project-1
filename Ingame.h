@@ -65,28 +65,39 @@ void Executive::player1Turn()
 }
 void Executive::player2Turn()
 {
-  cout << "Player 2 turn.\n";
-  do
-  {
-    printMenu();							//prints the menu of options
-    m_playerChoice = validateInput();
+	if(m_playerAmount == 2)
+	{
+		cout << "Player 2 turn.\n";
+		do
+		{
+			printMenu();							//prints the menu of options
+			m_playerChoice = validateInput();
 
-      if (m_playerChoice == 1)				//attack
-      {player2Attack();}
-      else if (m_playerChoice == 2)			//prints boards
-      {
-        printPlayer2OpponentKey();
-        printPlayer2PersonalKey();
-      }
-      else if (m_playerChoice == 3)			//see rules and info
-      {printRules();}
-      else if (m_playerChoice == 4)			//ends program early
-      {
-        m_isGameFinished = true;
-        m_isGameTerminated = true;
-      }
-      else
-      {cout << "Invalid entry.\n";}
-    } while (m_playerChoice != 1 && checkEarlyTermination() == false);			//repeats until player2's turn is over (after they attack or exit program)
+			if (m_playerChoice == 1)				//attack
+			{player2Attack();}
+			else if (m_playerChoice == 2)			//prints boards
+			{
+				printPlayer2OpponentKey();
+				printPlayer2PersonalKey();
+			}
+			else if (m_playerChoice == 3)			//see rules and info
+			{printRules();}
+			else if (m_playerChoice == 4)			//ends program early
+			{
+				m_isGameFinished = true;
+				m_isGameTerminated = true;
+			}
+			else
+			{cout << "Invalid entry.\n";}
+		} while (m_playerChoice != 1 && checkEarlyTermination() == false);			//repeats until player2's turn is over (after they attack or exit program)
+	}
+
+	else if(m_playerAmount == 1)
+	{
+		if(m_opponentDifficulty == 1)
+		{
+			player2ComputerAttack1();
+		}
+	}
 
 }

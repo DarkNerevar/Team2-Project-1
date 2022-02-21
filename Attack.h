@@ -269,7 +269,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
   }
   
   //Attack if the last attack was a hit but not sunk
-   if(m_computerHit == 1 && m_computerHitList == 0)
+   else if(m_computerHit == 1 && m_computerHitList == 0)
   {
 	do
 	{

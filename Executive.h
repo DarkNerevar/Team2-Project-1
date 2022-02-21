@@ -42,6 +42,10 @@ class Executive
 	  
 	  int m_playerAmount = 0;
 	  int m_opponentDifficulty = 0;
+	  bool m_computerHit = 0;
+	  int m_computerHitList = 0;
+	  int m_computerCol = 0;
+	  int m_computerRow = 0;
 
       char m_tempCol = ' ';
       int m_shipCol = 0;
@@ -85,7 +89,9 @@ class Executive
       void player2Turn();
       void player1Attack();
       void player2Attack();
-	  void player2ComputerAttack1();
+	  void player2ComputerAttackDifficulty1();
+	  void player2ComputerAttackDifficulty2();
+	  void player2ComputerAttackDifficulty3();
       void markPlayer1OpponentShipSunk();
       void markPlayer2OpponentShipSunk();
       bool checkIfFinished();

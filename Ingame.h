@@ -96,8 +96,20 @@ void Executive::player2Turn()
 	{
 		if(m_opponentDifficulty == 1)
 		{
-			player2ComputerAttack1();
+			player2ComputerAttackDifficulty1();
 		}
+		
+		else if(m_opponentDifficulty == 2)
+		{
+			player2ComputerAttackDifficulty2();
+		}
+		
+		else if(m_opponentDifficulty == 3)
+		{
+			player2ComputerAttackDifficulty3();
+		}
+		
+		
 	}
 
 }

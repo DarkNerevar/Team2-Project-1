@@ -35,6 +35,9 @@ class Executive
       int m_shipAmount = 0;
       int m_shipOrientation = 1;
       int counter = 0;
+	  
+	  int m_playerAmount = 0;
+	  int m_opponentDifficulty = 0;
 
       char m_tempCol = ' ';
       int m_shipCol = 0;
@@ -63,6 +66,9 @@ class Executive
       void origCopy();
       void startMenu();
       void printRules();
+	  void printRules1Player();
+	  void shipAmount();
+	  void difficultyLevel();
       void playGame();
       void earlyTermination();
   	  void gameOver();

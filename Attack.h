@@ -74,6 +74,7 @@ void Executive::player1Attack()
     cout << "-------------------------\n";
 	sleep_for(seconds(3));
     m_player1OpponentKey[m_shipRow][m_shipCol] = '~';
+	m_player2PersonalKey[m_shipRow][m_shipCol] = '*';
   }
 }
 void Executive::player2Attack()
@@ -139,6 +140,7 @@ void Executive::player2Attack()
     cout << "Player 2 missed!" << '\n';
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
   }
 }
 
@@ -172,6 +174,10 @@ void Executive::player2ComputerAttackDifficulty1() //randomly fires
 
   cout << string(50,'\n');
 
+  cout << "----------------------\n";
+  cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  cout << "----------------------\n";
+
   //2) change player1's personal key if hit, and player2's personal key regardless
   if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
   {
@@ -200,6 +206,7 @@ void Executive::player2ComputerAttackDifficulty1() //randomly fires
     cout << "Player 2 missed!" << '\n';
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
   }
 }
 
@@ -235,6 +242,10 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 
 	cout << string(50,'\n');
 
+	cout << "----------------------\n";
+  	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  	cout << "----------------------\n";
+
 	//2) change player1's personal key if hit, and player2's personal key regardless
 	if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
 	{
@@ -265,6 +276,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "Player 2 missed!" << '\n';
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 	}
   }
   
@@ -296,6 +308,10 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 	}while (counter != 0);				//repeats until the shot is valid
 
 	cout << string(50,'\n');
+	cout << "----------------------\n";
+  	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  	cout << "----------------------\n";
+	
 
 	//2) change player1's personal key if hit, and player2's personal key regardless
 	if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
@@ -328,6 +344,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "Player 2 missed!" << '\n';
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 1;
 	}
   }
@@ -361,6 +378,9 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 	}while (counter != 0);				//repeats until the shot is valid
 
 	cout << string(50,'\n');
+	cout << "----------------------\n";
+  	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  	cout << "----------------------\n";
 
 	//2) change player1's personal key if hit, and player2's personal key regardless
 	if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
@@ -395,6 +415,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "Player 2 missed!" << '\n';
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 2;
 	}
   } 
@@ -428,6 +449,9 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 	}while (counter != 0);				//repeats until the shot is valid
 
 	cout << string(50,'\n');
+	cout << "----------------------\n";
+  	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  	cout << "----------------------\n";
 
 	//2) change player1's personal key if hit, and player2's personal key regardless
 	if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
@@ -462,6 +486,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "Player 2 missed!" << '\n';
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 3;
 	}
   } 
@@ -494,6 +519,9 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 	}while (counter != 0);				//repeats until the shot is valid
 
 	cout << string(50,'\n');
+	cout << "----------------------\n";
+  	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+  	cout << "----------------------\n";
 
 	//2) change player1's personal key if hit, and player2's personal key regardless
 	if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
@@ -528,6 +556,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "Player 2 missed!" << '\n';
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 	}
   }
   
@@ -571,6 +600,9 @@ void Executive::player2ComputerAttackDifficulty3()
   }while (counter != 0);				//repeats until the shot is valid
 
   cout << string(50,'\n');
+  cout << "----------------------\n";
+	cout << "Player 2 is firing at " << (char)(m_shipCol + 65) << m_shipRow - 1 << '\n';
+	cout << "----------------------\n";
 
   //2) change player1's personal key if hit, and player2's personal key regardless
   if ( m_player1PersonalKey[m_shipRow][m_shipCol] == '1' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '2' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '3' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '4' ||  m_player1PersonalKey[m_shipRow][m_shipCol] == '5' )
@@ -600,6 +632,7 @@ void Executive::player2ComputerAttackDifficulty3()
     cout << "Player 2 missed!" << '\n';
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
+	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
   }
 }
 

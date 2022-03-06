@@ -59,14 +59,16 @@ bool Executive::checkEarlyTermination()
    int count = 1;
    if(player == 1) //checks if player 1 sunk one of player 2's ships
    {
-     //goes through the array to see if the ship has sunk
-     while(count < m_shipArrSize)
+     //goes through the array to see if the ship has sunk~
+      for(int j = 0; j < m_shipAmount; j++)
      {
         int hit = 0;
         int start, end;
         getArrRange(count, &start, &end);
+        std::cout << "Start: " << start << " " << "End: " << end << std::endl;
         for(int i = start; i <= end; i++)
         {
+          std::cout << "ShipArr index: " << i << std::endl;
           if(m_player2Ships[i] == "L")
           {
             hit++;
@@ -86,13 +88,13 @@ bool Executive::checkEarlyTermination()
    }
    else //checks if player 2 sunk one of player 1's ships
    {
-      while(count < m_shipArrSize)
+      for(int j = 0; j < m_shipAmount; j++)
       {
         int hit = 0;
         int start, end;
         getArrRange(count, &start, &end);
         for(int i = start; i <= end; i++)
-        {
+      {
           if(m_player1Ships[i] == "L")
           {
             hit++;

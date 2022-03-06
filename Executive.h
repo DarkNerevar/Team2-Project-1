@@ -96,6 +96,10 @@ class Executive
       void markPlayer2OpponentShipSunk();
       bool checkIfFinished();
   	  int validateInput();
+
+      int move(int player);
+      int player2Move();
+
       ~Executive()
       {
         for (int i = 0; i < m_rows; i++)

@@ -80,7 +80,7 @@ class Executive
       bool checkIfFinished();
   	  int validateInput();
 
-      int player1Move();
+      int move(int player);
       int player2Move();
 
       ~Executive()

@@ -94,7 +94,7 @@ bool Executive::checkEarlyTermination()
         int start, end;
         getArrRange(count, &start, &end);
         for(int i = start; i <= end; i++)
-        {
+      {
           if(m_player1Ships[i] == "L")
           {
             hit++;

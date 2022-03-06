@@ -8,6 +8,7 @@
  *
  ---------------------------------------------------------------------------- **/
 #include "Attack.h"
+#include "Move.h"
 void Executive::playGame()
 {
   while(checkIfFinished() == false)				//game loop that runs as long as the game is not finished
@@ -46,14 +47,20 @@ void Executive::player1Turn()
 
       if (m_playerChoice == 1)		//attack
       {player1Attack();}
-      else if (m_playerChoice == 2)			//print boards
+      else if(m_playerChoice == 2) {  //move ship
+        if(player1Move() == 1) { //if the player decides to go back
+          std::cout << "\n\n\t\tgoing back\n" << std::endl;
+          player1Turn();
+        }
+      }
+      else if (m_playerChoice == 3)			//print boards
       {
         printPlayer1OpponentKey();
         printPlayer1PersonalKey();
       }
-      else if (m_playerChoice == 3)
+      else if (m_playerChoice == 4)
       {printRules();}						//see rules and info
-      else if (m_playerChoice == 4)			//ends program early
+      else if (m_playerChoice == 5)			//ends program early
       {
         m_isGameFinished = true;
         m_isGameTerminated = true;

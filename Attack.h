@@ -664,3 +664,223 @@ void Executive::markPlayer2OpponentShipSunk()
     }
   }
 }
+
+void Executive::player1GiantShot(){
+  //check amount of giant shots
+
+  if (giantShotLeft1==0){
+    cout << "----------------------\n";
+    cout<<"You dont have any giant shots left.\n";
+    cout << "----------------------\n";
+    player1Turn();
+    return;
+  } else {
+    giantShotLeft1--;
+    
+	if(giantShotLeft1 == 0) {
+		cout << "----------------------\n";
+    	cout<<"You are now firing your final Giant SHot.\n";
+    	cout << "----------------------\n";
+	} else {
+		cout << "----------------------\n";
+    	cout<<"You have "<<giantShotLeft1<<" giant shots left.\n";
+   		cout << "----------------------\n";
+	}
+  }
+
+
+  //1) attack player2 with giant shot
+  do
+  {
+	  counter = 0;					//counter used to check if attack was valid
+
+    cout << "Player 1: Please enter column (A-J) to attack player 2 with giant shot: ";				//gets the column to attack
+    cin >> m_tempCol;
+    m_shipCol = (int(toupper(m_tempCol)) - 65);
+    cout << "Please enter row (1-10) to attack player 2: ";						//gets the row to attack
+    m_shipRow = validateInput()-1;
+
+	//checks if coordinates are in bounds
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+    {
+      cout << "Invalid coordinate entry!" << '\n';
+	    counter++;
+    }
+	//checks if the coordinate was already hit or shot
+    else if ( checkAllHitOf1(m_shipCol,m_shipRow))
+    {
+      cout << "All Coordinates Already Hit or Shot. Aim Elsewhere!\n";
+      counter++;
+    }
+  }while (counter != 0);		//repeats until the shot is valid
+  
+  bool tempMiss= true;
+  for(int i=m_shipCol-1;i<m_shipCol+2;i++){
+    if(i<0 || i>m_cols) continue;
+    for(int j=m_shipRow-1;j<m_shipRow+2;j++){
+      if(j<0 || j>m_rows) continue;
+      //2) change player2's personal key if hit, and player1's opponent key regardless
+      if ( m_player2PersonalKey[j][i] == '1' ||  m_player2PersonalKey[j][i] == '2' ||  m_player2PersonalKey[j][i] == '3' ||  m_player2PersonalKey[j][i] == '4' ||  m_player2PersonalKey[j][i] == '5' )
+      {
+        tempMiss=false;
+        m_tempNumSunk = m_player2PersonalKey[j][i];
+        m_player2PersonalKey[j][i] = 'X';
+        m_player1OpponentKey[j][i] = 'X';
+        hit(toupper(m_tempCol), j+1, 1);
+        bool tempSunk = isSunk(1);
+        if(tempSunk)
+        {
+          cout << "----------------------\n";
+          cout << "Player 1 sunk Player 2's ship!" << '\n';
+          cout << "----------------------\n";
+          markPlayer1OpponentShipSunk();
+        }
+        else
+        {
+          cout << "----------------------\n";
+          cout << "Player 1 hit Player 2's ship!" << '\n';
+          cout << "----------------------\n";
+        }
+      }
+      else
+      {
+        m_player1OpponentKey[j][i] = '~';
+		m_player2PersonalKey[j][i] = '*';
+      }
+    }
+  }
+  if (tempMiss){
+    cout << "-------------------------\n";
+    cout << "Player 1 missed with a giant shot!" << '\n';
+    cout << "-------------------------\n";
+  }
+
+  
+
+}
+
+bool Executive::checkAllHitOf1(int col, int row){
+  for(int i=col-1;i<col+2;i++){
+    if(i<0 || i>=m_cols) {
+      continue;}
+
+    for(int j=row-1;j<row+2;j++){
+       if(j<0 || j>=m_rows) {
+      }else{
+      if (m_player1OpponentKey[j][i] == '?') return false;
+      }
+
+    }
+  }
+  return true;
+}
+
+void Executive::player2GiantShot(){
+  //check amount of giant shots
+
+  if (giantShotLeft2==0){
+    cout << "----------------------\n";
+    cout<<"You dont have any giant shots left.\n";
+    cout << "----------------------\n";
+    player2Turn();
+    return;
+  } else {
+    giantShotLeft2--;
+    if(giantShotLeft2 == 0) {
+		cout << "----------------------\n";
+    	cout<<"You are now firing your final Giant SHot.\n";
+    	cout << "----------------------\n";
+	} else {
+		cout << "----------------------\n";
+    	cout<<"You have "<<giantShotLeft2<<" giant shots left.\n";
+   		cout << "----------------------\n";
+	}
+  }
+
+  
+
+  //1) attack player1 with giant shot
+  do
+  {
+	  counter = 0;					//counter used to check if attack was valid
+
+    cout << "Player 2: Please enter column (A-J) to attack player 1 with giant shot: ";				//gets the column to attack
+    cin >> m_tempCol;
+    m_shipCol = (int(toupper(m_tempCol)) - 65);
+    cout << "Please enter row (1-10) to attack player 1: ";						//gets the row to attack
+    m_shipRow = validateInput()-1;
+
+	//checks if coordinates are in bounds
+    if ( (m_shipCol < 0 || m_shipCol >= m_cols) || (m_shipRow < 0 || m_shipRow >= m_rows) )
+    {
+      cout << "Invalid coordinate entry!" << '\n';
+	    counter++;
+    }
+	//checks if the coordinate was already hit or shot
+    else if ( checkAllHitOf2(m_shipCol,m_shipRow))
+    {
+      cout << "All Coordinates Already Hit or Shot. Aim Elsewhere!\n";
+      counter++;
+    }
+  }while (counter != 0);		//repeats until the shot is valid
+  
+  bool tempMiss= true;
+  for(int i=m_shipCol-1;i<m_shipCol+2;i++){
+    if(i<0 || i>m_cols) continue;
+    for(int j=m_shipRow-1;j<m_shipRow+2;j++){
+      if(j<0 || j>m_rows) continue;
+      //2) change player1's personal key if hit, and player2's opponent key regardless
+      if ( m_player1PersonalKey[j][i] == '1' ||  m_player1PersonalKey[j][i] == '2' ||  m_player1PersonalKey[j][i] == '3' ||  m_player1PersonalKey[j][i] == '4' ||  m_player2PersonalKey[j][i] == '5' )
+      {
+        tempMiss=false;
+        m_tempNumSunk = m_player1PersonalKey[j][i];
+        m_player1PersonalKey[j][i] = 'X';
+        m_player2OpponentKey[j][i] = 'X';
+        hit(toupper(m_tempCol), j+1, 2); 
+        bool tempSunk = isSunk(2);
+        if(tempSunk)
+        {
+          cout << "----------------------\n";
+          cout << "Player 2 sunk Player 1's ship!" << '\n';
+          cout << "----------------------\n";
+          markPlayer2OpponentShipSunk();
+        }
+        else
+        {
+          cout << "----------------------\n";
+          cout << "Player 2 hit Player 1's ship!" << '\n';
+          cout << "----------------------\n";
+        }
+      }
+      else
+      {
+        m_player2OpponentKey[j][i] = '~';
+		m_player1PersonalKey[j][i] = '*';
+      }
+    }
+  }
+  if (tempMiss){
+    cout << "-------------------------\n";
+    cout << "Player 2 missed with a giant shot!" << '\n';
+    cout << "-------------------------\n";
+  }
+
+  
+
+}
+
+bool Executive::checkAllHitOf2(int col, int row){
+    for(int i=col-1;i<col+2;i++){
+    if(i<0 || i>=m_cols) {
+      continue;}
+
+    for(int j=row-1;j<row+2;j++){
+       if(j<0 || j>=m_rows) {
+      }else{
+      if (m_player2OpponentKey[j][i] == '?') return false;
+      }
+
+    }
+  }
+  return true;
+}

@@ -49,27 +49,30 @@ void Executive::player1Turn()
       {player1Attack();}
       else if(m_playerChoice == 2) {  //move ship
         if(move(1) == 1) { //if the player decides to go back
-          std::cout << "\n\n\t\tgoing back\n" << std::endl;
           player1Turn();
-        } else {
-          std::cout << "\n\n\t\tend of turn\n" << std::endl;
-        }
+        } 
       }
-      else if (m_playerChoice == 3)			//print boards
+      else if (m_playerChoice == 3) {   //giant shot
+        player1GiantShot();
+      }
+      else if (m_playerChoice == 4) {   //scoreboard
+
+      }
+      else if (m_playerChoice == 5)			//print boards
       {
         printPlayer1OpponentKey();
         printPlayer1PersonalKey();
       }
-      else if (m_playerChoice == 4)
+      else if (m_playerChoice == 6)
       {printRules();}						//see rules and info
-      else if (m_playerChoice == 5)			//ends program early
+      else if (m_playerChoice == 7)			//ends program early
       {
         m_isGameFinished = true;
         m_isGameTerminated = true;
       }
       else
       {cout << "Invalid entry.\n";}
-    } while (m_playerChoice != 1  && m_playerChoice != 2 && checkEarlyTermination() == false);			//repeats until player1's turn is over (after they attack or exit program)
+    } while (m_playerChoice != 1  && m_playerChoice != 2 && m_playerChoice != 3 && checkEarlyTermination() == false);			//repeats until player1's turn is over (after they attack or exit program)
 
 }
 void Executive::player2Turn()
@@ -86,27 +89,30 @@ void Executive::player2Turn()
 			{player2Attack();}
       else if(m_playerChoice == 2) {  //move ship
         if(move(2) == 1) { //if the player decides to go back
-          std::cout << "\n\n\t\tgoing back\n" << std::endl;
-          player1Turn();
-        } else {
-          std::cout << "\n\n\t\tend of turn\n" << std::endl;
+          player2Turn();
         }
       }
-			else if (m_playerChoice == 3)			//prints boards
+      else if (m_playerChoice == 3) {   //giant shot
+        player1GiantShot();
+      }
+      else if (m_playerChoice == 4) {   //scoreboard
+
+      }
+			else if (m_playerChoice == 5)			//prints boards
 			{
 				printPlayer2OpponentKey();
 				printPlayer2PersonalKey();
 			}
-			else if (m_playerChoice == 4)			//see rules and info
+			else if (m_playerChoice == 6)			//see rules and info
 			{printRules();}
-			else if (m_playerChoice == 5)			//ends program early
+			else if (m_playerChoice == 7)			//ends program early
 			{
 				m_isGameFinished = true;
 				m_isGameTerminated = true;
 			}
 			else
 			{cout << "Invalid entry.\n";}
-		} while (m_playerChoice != 1 && m_playerChoice != 2 && checkEarlyTermination() == false);			//repeats until player2's turn is over (after they attack or exit program)
+		} while (m_playerChoice != 1 && m_playerChoice != 2 && m_playerChoice != 3 && checkEarlyTermination() == false);			//repeats until player2's turn is over (after they attack or exit program)
 	}
 
 	else if(m_playerAmount == 1)

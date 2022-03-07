@@ -60,6 +60,9 @@ class Executive
       string* m_player1Ships = nullptr;
       string* m_player2Ships = nullptr;
 
+      int giantShotLeft1 = 1;
+      int giantShotLeft2 = 1;
+    
     public:
 
       void setupShipsArr();
@@ -96,9 +99,12 @@ class Executive
       void markPlayer2OpponentShipSunk();
       bool checkIfFinished();
   	  int validateInput();
+      void player1GiantShot(); //Drake
+      void player2GiantShot(); //Drake
+      bool checkAllHitOf1(int col, int row);//Drake
+      bool checkAllHitOf2(int col, int row);//Drake
 
       int move(int player);
-      int player2Move();
 
       ~Executive()
       {

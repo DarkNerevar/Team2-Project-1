@@ -137,10 +137,12 @@ void Executive::printMenu()
 {
   cout << "-------Options-------\n";
   cout << "1) Attack enemy\n";
-  std::cout << "2) Move ship\n";
-  cout << "3) View screens\n";
-  cout << "4) See rules\n";
-  cout << "5) Terminate program\n";
+  cout << "2) Move ship\n";
+  cout << "3) Giant Shot\n";
+  cout << "4) View Scoreboard\n";
+  cout << "5) View Boards\n";
+  cout << "6) See rules\n";
+  cout << "7) Terminate program\n";
   cout << "Choice: ";
 
 }

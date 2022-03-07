@@ -123,6 +123,7 @@ int Executive::move(int player) {
                 } 
             }
 
+            //check that ship is not placed on a square that has been shot at
             if(validPlacement) {
                 //check check that the ship does not overlap or intersect with any previously shot at squares
                 if(m_shipOrientation == 1) {    //vertical
@@ -130,10 +131,10 @@ int Executive::move(int player) {
                         //check if the space not valid
                         if(m_player2OpponentKey[shipRow + i][shipCol] != '?') { //~ is open space
                             if(m_player2OpponentKey[shipRow + i][shipCol] == 'X') { //check space has not been hit
-                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a hit square. Please try again." << std::endl;
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a hit square. Please try again." << std::endl;
                             }
-                            else if(m_player1PersonalKey[shipRow + i][shipCol] == '~') { //check is space has been
-                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a missed square. Please try again." << std::endl;
+                            else if(m_player2OpponentKey[shipRow + i][shipCol] == '~') { //check is space has been
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a missed square. Please try again." << std::endl;
                             }
                             validPlacement = false;
                         }
@@ -143,10 +144,10 @@ int Executive::move(int player) {
                         //check if the space not valid
                         if(m_player2OpponentKey[shipRow][shipCol + i] != '?') { //~ is open space
                             if(m_player2OpponentKey[shipRow][shipCol + i] == 'X') { //check space has not been hit
-                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a hit square. Please try again." << std::endl;
+                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow + 1 << " would overlap it with a hit square. Please try again." << std::endl;
                             }
-                            else if(m_player1PersonalKey[shipRow][shipCol + i] == '~') { //check is space has been
-                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a missed square. Please try again." << std::endl;
+                            else if(m_player2OpponentKey[shipRow][shipCol + i] == '~') { //check is space has been
+                                std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow + 1 << " would overlap it with a missed square. Please try again." << std::endl;
                             }
                             validPlacement = false;
                         }
@@ -199,6 +200,8 @@ int Executive::move(int player) {
 
             //get the ship the player wants to move
             while(true){
+                validPlacement = true;
+
                 std::cout << "Which ship do you want to move? (1 - " << m_shipAmount << ")\t";            
 
                 selectedShip = validateInput(); //validate input
@@ -215,10 +218,12 @@ int Executive::move(int player) {
                 if(selectedShip == numSquares) {
                     if(isAlive(selectedShip, m_player2PersonalKey)) {  //check if the selected ship is sunk
                         break; //break out of loop
-                    } else {
+                    } else { //ship is sunk
                         std::cout << "Invalid input! Select a ship that is not sunk!" << std::endl; //invalid input message
                     }
-                } else {
+                } else if(selectedShip < 1 || selectedShip > m_shipAmount) {
+                    std::cout << "There is no " << selectedShip << " in the game. Select a valid ship." << std::endl;
+                } else { //ship is hit
                     std::cout << "A ship that has been hit cannot move. It's sinking." << std::endl;
                 }
             }
@@ -252,46 +257,46 @@ int Executive::move(int player) {
             if(m_shipOrientation == 1)  { //vertial
                 if(shipCol < 0 || shipCol > 9 || shipRow < 0 || shipRow + selectedShip > 9) {
                     std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would be out of bounds. Please try again." << std::endl;
-                } else {
-                    break;
+                    validPlacement = false;
                 }
             } else {    //horizontal
                 if(shipCol < 0 || shipCol + selectedShip > 9 || shipRow < 0 || shipRow > 9) {
                     std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would be out of bounds. Please try again." << std::endl;
-                } else {
-                    break;
-                }
+                    validPlacement = false;
+                } 
             }
 
-            //check check that the ship does not overlap or intersect with any previously shot at squares
-            if(m_shipOrientation == 1) {    //vertical
-                for(int i = 0; i < selectedShip; i++) {
-                    //check if the space not valid
-                    if(m_player1OpponentKey[shipRow + i][shipCol] != '?') { //~ is open space
-                        if(m_player1OpponentKey[shipRow + i][shipCol] == 'X') { //check space has not been hit
-                            std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a hit square. Please try again." << std::endl;
+            //check that ship is not placed on a square that has been shot at
+            if(validPlacement) {
+                //check check that the ship does not overlap or intersect with any previously shot at squares
+                if(m_shipOrientation == 1) {    //vertical
+                    for(int i = 0; i < selectedShip; i++) {
+                        //check if the space not valid
+                        if(m_player1OpponentKey[shipRow + i][shipCol] != '?') { //~ is open space
+                            if(m_player1OpponentKey[shipRow + i][shipCol] == 'X') { //check space has not been hit
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a hit square. Please try again." << std::endl;
+                            }
+                            else if(m_player1OpponentKey[shipRow + i][shipCol] == '~') { //check is space has been
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a missed square. Please try again." << std::endl;
+                            }
+                            validPlacement = false;
                         }
-                        else if(m_player2PersonalKey[shipRow + i][shipCol] == '~') { //check is space has been
-                            std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a missed square. Please try again." << std::endl;
-                        }
-                        validPlacement = false;
                     }
-                }
-            } else {    //horizontal
-                for(int i = 0; i < selectedShip; i++) {
-                    //check if the space not valid
-                    if(m_player1OpponentKey[shipRow][shipCol + i] != '?') { //~ is open space
-                        if(m_player1OpponentKey[shipRow][shipCol + i] == 'X') { //check space has not been hit
-                            std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a hit square. Please try again." << std::endl;
+                } else {    //horizontal
+                    for(int i = 0; i < selectedShip; i++) {
+                        //check if the space not valid
+                        if(m_player1OpponentKey[shipRow][shipCol + i] != '?') { //~ is open space
+                            if(m_player1OpponentKey[shipRow][shipCol + i] == 'X') { //check space has not been hit
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a hit square. Please try again." << std::endl;
+                            }
+                            else if(m_player1OpponentKey[shipRow][shipCol + i] == '~') { //check is space has been
+                                std::cout << "Moving ship " << selectedShip << " to " << (char)(shipCol + 65) << shipRow + 1 << " would overlap it with a missed square. Please try again." << std::endl;
+                            }
+                            validPlacement = false;
                         }
-                        else if(m_player2PersonalKey[shipRow][shipCol + i] == '~') { //check is space has been
-                            std::cout << "Moving ship " << selectedShip << " to " << std::toupper(m_tempCol) << shipRow << " would overlap it with a missed square. Please try again." << std::endl;
-                        }
-                        validPlacement = false;
                     }
                 }
             }
-
             //break out of loop if ship move is valid. otherwise try again
             if(validPlacement) break;
         }
@@ -314,9 +319,6 @@ int Executive::move(int player) {
             }
         }
     }
-    return 0;
-}
 
-int Executive::player2Move() {
     return 0;
 }

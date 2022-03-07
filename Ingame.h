@@ -56,7 +56,7 @@ void Executive::player1Turn()
         player1GiantShot();
       }
       else if (m_playerChoice == 4) {   //scoreboard
-
+		  printStatistics();
       }
       else if (m_playerChoice == 5)			//print boards
       {
@@ -96,7 +96,7 @@ void Executive::player2Turn()
         player1GiantShot();
       }
       else if (m_playerChoice == 4) {   //scoreboard
-
+				printStatistics();
       }
 			else if (m_playerChoice == 5)			//prints boards
 			{

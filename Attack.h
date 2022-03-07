@@ -58,6 +58,8 @@ void Executive::player1Attack()
       cout << "----------------------\n";
 	  sleep_for(seconds(3));
       markPlayer1OpponentShipSunk();
+	  m_player1Hits++;
+	  m_player1ShipsSunk++;
     }
     else
     {
@@ -65,6 +67,7 @@ void Executive::player1Attack()
       cout << "Player 1 hit Player 2's ship!" << '\n';
       cout << "----------------------\n";
 	  sleep_for(seconds(3));
+	  m_player1Hits++;
     }
   }
   else
@@ -75,6 +78,7 @@ void Executive::player1Attack()
 	sleep_for(seconds(3));
     m_player1OpponentKey[m_shipRow][m_shipCol] = '~';
 	m_player2PersonalKey[m_shipRow][m_shipCol] = '*';
+	m_player1Misses++;
   }
 }
 void Executive::player2Attack()
@@ -126,12 +130,15 @@ void Executive::player2Attack()
       cout << "Player 2 sunk Player 1's ship!" << '\n';
       cout << "----------------------\n";
       markPlayer2OpponentShipSunk();
+	  m_player2Hits++;
+	  m_player2ShipsSunk++;
     }
     else
     {
       cout << "----------------------\n";
       cout << "Player 2 hit Player 1's ship!" << '\n';
       cout << "----------------------\n";
+	  m_player2Hits++;
     }
   }
   else
@@ -141,6 +148,7 @@ void Executive::player2Attack()
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
+	m_player2Misses++;
   }
 }
 
@@ -191,13 +199,16 @@ void Executive::player2ComputerAttackDifficulty1() //randomly fires
       cout << "----------------------\n";
       cout << "Player 2 sunk Player 1's ship!" << '\n';
       cout << "----------------------\n";
-      markPlayer2OpponentShipSunk();
+	  markPlayer2OpponentShipSunk();
+	  m_player2Hits++;
+	  m_player2ShipsSunk++;
     }
     else
     {
       cout << "----------------------\n";
       cout << "Player 2 hit Player 1's ship!" << '\n';
       cout << "----------------------\n";
+	  m_player2Hits++;
     }
   }
   else
@@ -207,6 +218,7 @@ void Executive::player2ComputerAttackDifficulty1() //randomly fires
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
+	m_player2Misses++;
   }
 }
 
@@ -261,6 +273,8 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "----------------------\n";
 			markPlayer2OpponentShipSunk();
 			m_computerHit = 0;
+			m_player2Hits++;
+			m_player2ShipsSunk++;
 		}
 		else
 		{
@@ -268,6 +282,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "Player 2 hit Player 1's ship!" << '\n';
 			cout << "----------------------\n";
 			m_computerHit = 1;
+			m_player2Hits++;
 		}
 	}	
 	else
@@ -277,6 +292,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
+		m_player2Misses++;
 	}
   }
   
@@ -328,6 +344,8 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "----------------------\n";
 			markPlayer2OpponentShipSunk();
 			m_computerHit = 0;
+			m_player2Hits++;
+			m_player2ShipsSunk++;
 		}
 		else
 		{
@@ -335,7 +353,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "Player 2 hit Player 1's ship!" << '\n';
 			cout << "----------------------\n";
 			m_computerHit = 1;
-			
+			m_player2Hits++;
 		}
 	}	
 	else
@@ -346,6 +364,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 1;
+		m_player2Misses++;
 	}
   }
   
@@ -398,6 +417,8 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			markPlayer2OpponentShipSunk();
 			m_computerHit = 0;
 			m_computerHitList = 0;
+			m_player2Hits++;
+			m_player2ShipsSunk++;
 		}
 		else
 		{
@@ -406,7 +427,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "----------------------\n";
 			m_computerHit = 1;
 			m_computerHitList = 0;
-			
+			m_player2Hits++;
 		}
 	}	
 	else
@@ -417,6 +438,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 2;
+		m_player2Misses++;
 	}
   } 
   
@@ -469,6 +491,8 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			markPlayer2OpponentShipSunk();
 			m_computerHit = 0;
 			m_computerHitList = 0;
+			m_player2Hits++;
+			m_player2ShipsSunk++;
 		}
 		else
 		{
@@ -477,7 +501,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "----------------------\n";
 			m_computerHit = 1;
 			m_computerHitList = 0;
-			
+			m_player2Hits++;
 		}
 	}	
 	else
@@ -488,6 +512,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
 		m_computerHitList = 3;
+		m_player2Misses++;
 	}
   } 
   
@@ -539,6 +564,8 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			markPlayer2OpponentShipSunk();
 			m_computerHit = 0;
 			m_computerHitList = 0;
+			m_player2Hits++;
+			m_player2ShipsSunk++;
 		}
 		else
 		{
@@ -547,7 +574,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 			cout << "----------------------\n";
 			m_computerHit = 1;
 			m_computerHitList = 0;
-			
+			m_player2Hits++;
 		}
 	}	
 	else
@@ -557,6 +584,7 @@ void Executive::player2ComputerAttackDifficulty2() // this method randomly fires
 		cout << "-------------------------\n";
 		m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 		m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
+		m_player2Misses++;
 	}
   }
   
@@ -618,12 +646,15 @@ void Executive::player2ComputerAttackDifficulty3()
       cout << "Player 2 sunk Player 1's ship!" << '\n';
       cout << "----------------------\n";
       markPlayer2OpponentShipSunk();
+	  m_player2Hits++;
+	  m_player2ShipsSunk++;
     }
     else
     {
       cout << "----------------------\n";
       cout << "Player 2 hit Player 1's ship!" << '\n';
       cout << "----------------------\n";
+	  m_player2Hits++;
     }
   }
   else
@@ -633,6 +664,7 @@ void Executive::player2ComputerAttackDifficulty3()
     cout << "-------------------------\n";
     m_player2OpponentKey[m_shipRow][m_shipCol] = '~';
 	m_player1PersonalKey[m_shipRow][m_shipCol] = '*';
+	m_player2Misses++;
   }
 }
 
@@ -733,13 +765,16 @@ void Executive::player1GiantShot(){
           cout << "----------------------\n";
           cout << "Player 1 sunk Player 2's ship!" << '\n';
           cout << "----------------------\n";
-          markPlayer1OpponentShipSunk();
+		  markPlayer1OpponentShipSunk();
+		  m_player1Hits++;
+		  m_player1ShipsSunk++;
         }
         else
         {
           cout << "----------------------\n";
           cout << "Player 1 hit Player 2's ship!" << '\n';
           cout << "----------------------\n";
+		  m_player1Hits++;
         }
       }
       else
@@ -753,6 +788,7 @@ void Executive::player1GiantShot(){
     cout << "-------------------------\n";
     cout << "Player 1 missed with a giant shot!" << '\n';
     cout << "-------------------------\n";
+	m_player1Misses++;
   }
 
   
@@ -844,12 +880,15 @@ void Executive::player2GiantShot(){
           cout << "Player 2 sunk Player 1's ship!" << '\n';
           cout << "----------------------\n";
           markPlayer2OpponentShipSunk();
+		  m_player2Hits++;
+		  m_player2ShipsSunk++;
         }
         else
         {
           cout << "----------------------\n";
           cout << "Player 2 hit Player 1's ship!" << '\n';
           cout << "----------------------\n";
+		  m_player2Hits++;
         }
       }
       else
@@ -863,6 +902,7 @@ void Executive::player2GiantShot(){
     cout << "-------------------------\n";
     cout << "Player 2 missed with a giant shot!" << '\n';
     cout << "-------------------------\n";
+	m_player2Misses++;
   }
 
   

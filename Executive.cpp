@@ -146,6 +146,17 @@ void Executive::printMenu()
   cout << "Choice: ";
 
 }
+void Executive::printStatistics()		//New feature - prints the game statistics when option is selected
+{
+	cout << "----------Game Statistics----------\n";
+	cout << "                Player 1   Player 2\n";
+	cout << "Hits:             " << m_player1Hits << "          " << m_player2Hits << '\n';
+	cout << "Misses:           " << m_player1Misses << "          " << m_player2Misses << '\n';
+	cout << "Ships Sunk:       " << m_player1ShipsSunk << "          " << m_player2ShipsSunk << '\n';
+	cout << "Ships Remaining:  " << m_shipAmount - m_player1ShipsSunk << "          " << m_shipAmount - m_player2ShipsSunk << '\n';
+
+}
+
 int Executive::validateInput()			//checks if interger input is valid
 {
 	int choice;

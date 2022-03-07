@@ -39,6 +39,13 @@ class Executive
       int m_shipAmount = 0;
       int m_shipOrientation = 1;
       int counter = 0;
+
+      int m_player1Hits = 0;		//New variables used for statistics option
+      int m_player2Hits = 0;
+      int m_player1Misses = 0;
+      int m_player2Misses = 0;
+      int m_player1ShipsSunk = 0;
+      int m_player2ShipsSunk = 0;
 	  
 	  int m_playerAmount = 0;
 	  int m_opponentDifficulty = 0;
@@ -84,6 +91,7 @@ class Executive
       void earlyTermination();
   	  void gameOver();
       void printMenu();
+      void printStatistics();               //New feature
       void printPlayer1PersonalKey();
       void printPlayer2PersonalKey();
       void printPlayer1OpponentKey();
